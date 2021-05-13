@@ -1,0 +1,22 @@
+[
+    {
+      "name": "Revista Colombia Forestal",
+      "issn": "2011-486x",
+      "quartil": "4",
+      "cantidadArticulos": 1000,
+      "colciencias": "C",
+      "paginaWeb": "https://revistas.udistrital.edu.co/index.php/colfor",
+      "pais": "Colombia",
+      "flag": "https://restcountries.eu/data/afg.svg"
+    },
+    {
+      "name": "Revista Ciudad PazAndo",
+      "issn": "2011-4864",
+      "quartil": "N/A",
+      "cantidadArticulos": 100,
+      "colciencias": "Sin Clasificación",
+      "paginaWeb": "https://revistas.udistrital.edu.co/index.php/cpaz",
+      "pais": "Colombia",
+      "flag": "https://restcountries.eu/data/eua.svg"
+    }
+]
