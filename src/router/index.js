@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Revistas from '../views/Revistas.vue'
+import Pago from '../views/Pago.vue'
 import store from '../store'
 
 const routes = [
@@ -26,8 +27,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Ingreso.vue')
   },
   {
-    path: '/suscripcion',
-    name: 'Suscripcion',
+    path: '/pago',
+    name: 'Pago',
     component: () => import(/* webpackChunkName: "about" */ '../views/Pago.vue'),
     meta: {rutaProtegida: true}
   }

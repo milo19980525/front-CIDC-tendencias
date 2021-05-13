@@ -12,14 +12,14 @@
       <div class="d-flex">
           <router-link 
             class="btn btn-dark" 
-            to="/"
+            to="/pago"
             v-if="usuarioAutenticado"
           >
             Suscripción
           </router-link>
           <router-link 
             class="btn btn-dark" 
-            to="/suscripcion"
+            to="/ingreso"
             v-if="!usuarioAutenticado"
           >
             Ingresar

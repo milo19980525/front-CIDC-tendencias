@@ -15,7 +15,7 @@ export default createStore({
     },
     user : null,
     nombre: null,
-    susccripcion: null,
+    suscripcion: null,
     error: {tipo: null, mensaje: null}
   },
   mutations: {
@@ -49,7 +49,7 @@ export default createStore({
       state.nombre = payload
     },
     cargarSuscripcion(state, payload){
-      state.susccripcion = payload
+      state.suscripcion = payload
     },
     set(state, payload){
       state.tareas.push(payload)
@@ -58,7 +58,11 @@ export default createStore({
       state.nombre = payload
     },
     setSuscripcionUser(state, payload){
-      state.susccripcion = payload
+      console.log("SUSCRIPCIONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
+      console.log(payload)
+      state.suscripcion = payload
+      console.log("SUSCRIPCIONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN 2222222222222222222222222222222222222")
+      console.log(state.suscripcion)
     },
     eliminar(state, payload){
       state.tareas = state.tareas.filter(item => item.id !== payload)
@@ -188,6 +192,7 @@ export default createStore({
       } catch (error) {
         console.log(error)
       }
+      console.log("INICIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
       commit('setSuscripcionUser', "Free")
     },
     async getRevistas({commit}){
