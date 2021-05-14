@@ -1,6 +1,8 @@
 <template>
-    Las BOLASSS 
-  {{suscripcion}}
+    Las BOLASSS Ya empecé a programar en VUE
+    <div>
+        {{suscripcion}}
+    </div>
 </template>
 
 <script>
