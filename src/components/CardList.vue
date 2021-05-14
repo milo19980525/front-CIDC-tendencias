@@ -1,5 +1,6 @@
 <template>
-  <div class="row">
+  <div class="row"
+    v-if="revistas">
     <div 
       class="col-12"
       v-for="revista in revistas" :key="revista.name"
@@ -31,7 +32,7 @@ export default {
 
     onMounted(async() => {
       await store.dispatch('getRevistas')
-      await store.dispatch('filtrarQuartil', '')
+      //await store.dispatch('filtrarQuartil', '')
     })    
 
     //console.log("REVISTAAAAAS FILTRADAAAAAAAAAAAAAAAS")

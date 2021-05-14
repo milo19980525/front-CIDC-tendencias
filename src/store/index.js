@@ -94,6 +94,9 @@ export default createStore({
       commit('setUser', null)
       commit('setNombres', null)
       commit('setSuscripcionUser', null)
+      commit('setRevistas', null)
+      commit('setRevistasFiltradas', null)
+      
       localStorage.removeItem('usuario')
       router.push('/ingreso')
     },
@@ -223,7 +226,33 @@ export default createStore({
         }
       })
       commit('setRevistasFiltradas', filtro)
-    }
+    },
+    async obtenerRevistas({commit}, filtro){
+      try {
+        /*
+        const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDyJIk3EKTzIgWQXFuwbT3zQQYvL2_uYxk', {
+          method: 'POST',
+          body:JSON.stringify({
+            consulta1 : filtro.consulta1,
+            consulta2 : filtro.consulta2,
+            consulta3 : filtro.consulta3,
+            consulta4 : filtro.consulta4,
+            minarticulos : filtro.minarticulos,
+            maxarticulos : filtro.maxarticulos,
+            area: filtro.area,
+            suscripción: filtro.suscripcion
+          })
+        })
+        const revistas = await res.json() */
+        const res = await fetch('revistas.json')
+        const revistas = await res.json()
+        commit('setRevistasFiltradas', revistas)
+        //localStorage.setItem('usuario', JSON.stringify(userDB))
+        //router.push('/')
+      } catch (error) {
+        console.log(error)
+      }
+    },
   },
   modules: {
   },

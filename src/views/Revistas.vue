@@ -1,11 +1,11 @@
 <template>
+  <Cuartil/>
   <h3
     class="my-5"
     style="text-align: center"
     >
       Lista de Revistas
   </h3>
-  <Cuartil/>
   <CardList />
 
   <!-- <p v-for="(revista, index) in arrayData" :key="index">
