@@ -198,6 +198,27 @@ export default createStore({
       console.log("INICIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
       commit('setSuscripcionUser', "Free")
     },
+
+
+    async updateSuscripcion({commit, state},susc){
+      const valor = "Premium"
+      try{
+        const res = await fetch(`https://udemy-firebase-56415-default-rtdb.firebaseio.com/tareas/${state.user.localId}.json?auth=${state.user.idToken}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({Suscripcion: susc.suscripcion_enviar})
+        })
+        console.log("Llleooooooooooooooooooooooooooooooooooooooooo 1 11111111111111111111111111")
+      } catch (error) {
+        console.log(error)
+      }
+      console.log("INICIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+      commit('setSuscripcionUser', "Premium")
+    },
+
+
     async getRevistas({commit}){
       try {
         const res = await fetch('revistas.json')
