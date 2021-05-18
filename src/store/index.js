@@ -40,7 +40,13 @@ export default createStore({
       }
     },
     setUser(state, payload){
+      console.log("USUARIOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+      console.log(payload)
       state.user = payload
+      console.log("USUARIOOOOOOOOOOOOOOOOOOOOOOOOOOOOO222222222222222222222")
+      console.log(state.user)
+      console.log("email")
+      //console.log(state.user.email)
     },
     cargar(state, payload){
       state.tareas = payload
@@ -250,22 +256,8 @@ export default createStore({
     },
     async obtenerRevistas({commit}, filtro){
       try {
-        /*
-        const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDyJIk3EKTzIgWQXFuwbT3zQQYvL2_uYxk', {
-          method: 'POST',
-          body:JSON.stringify({
-            consulta1 : filtro.consulta1,
-            consulta2 : filtro.consulta2,
-            consulta3 : filtro.consulta3,
-            consulta4 : filtro.consulta4,
-            minarticulos : filtro.minarticulos,
-            maxarticulos : filtro.maxarticulos,
-            area: filtro.area,
-            suscripción: filtro.suscripcion
-          })
-        })
-        const revistas = await res.json() */
-        const res = await fetch('revistas.json')
+        
+        const res = await fetch(`http://localhost:5000/filtroParametros?area=${filtro.area}&categoria1=${filtro.consulta1}&categoria2=${filtro.consulta2}&categoria3=${filtro.consulta3}&categoria4=${filtro.consulta4}&minArt=${filtro.minarticulos}&maxArt=${filtro.maxarticulos}&estado=${filtro.suscripcion}`)
         const revistas = await res.json()
         commit('setRevistasFiltradas', revistas)
         //localStorage.setItem('usuario', JSON.stringify(userDB))
@@ -274,6 +266,63 @@ export default createStore({
         console.log(error)
       }
     },
+    async sendMail({commit}, email){
+      console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO GMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+      const nodemailer = require('nodemailer')
+      const { google } = require('googleapis')
+      
+      console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO GMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+
+      const CLIENT_ID = '225068578618-9a435np32p9d4eidu3ohdbeog2gsqcjg.apps.googleusercontent.com'
+      const CLIENT_SECRET = 'ZspbZO_GAs0BUUMghr3P5nvc'
+      const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
+      const REFRESH_TOKEN = '1//04i_m13cOuUqgCgYIARAAGAQSNwF-L9Ir6G4tP0rVJgC7Cd_VLZtb5Mnuik3eb11BfCzUIp2cKEnnx9p4tiWuqGN_oFrv9-_UNKE'
+  
+      const oAuth2Client = new google.auth.OAuth2(
+            CLIENT_ID,
+            CLIENT_SECRET,
+            REDIRECT_URI
+        );
+  
+          oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN});
+          console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO GMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+      try{
+          console.log("GMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+          const accessToken = await oAuth2Client.getAccessToken();
+          console.log("GMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+          console.log(email)
+          const transport = nodemailer.createTransport({
+              service: 'gmail',
+              auth:{
+                  type : 'OAuth2',
+                  user : 'juegabrayan333@gmail.com',
+                  clientId : CLIENT_ID,
+                  clientSecret : CLIENT_SECRET,
+                  refreshToken : REFRESH_TOKEN,
+                  accessToken : accessToken,
+              },
+          });
+  
+          const mailOptions = {
+              from : 'Notificador ProScience Searcher <juegabrayan333@gmail.com>',
+              to : email,
+              subject: "Notificación - Proscience Searcher",
+              text: 'Notificacion 1',
+              html: '<h1> Usted se ha suscrito a ProScien Searcher </h1>',
+          };
+
+          const result = await transport.sendMail(mailOptions);
+          console.log(result)
+
+          commit()
+  
+          
+          //return result;
+  
+      }catch(error){
+          console.log(error);
+      }
+    }, 
   },
   modules: {
   },

@@ -165,6 +165,11 @@ export default {
     methods:{
         ...mapActions(['obtenerRevistas']),
         async procesarFormulario(){
+            console.log("CONSULTAAAAAAAAAAAS")
+            console.log(this.consulta1)
+            console.log(this.consulta2)
+            console.log(this.consulta3)
+            console.log(this.consulta4)
             this.obtenerRevistas({consulta1: this.consulta1, consulta2: this.consulta2, consulta3: this.consulta3, 
             consulta4: this.consulta4, minarticulos: this.minarticulos, maxarticulos: this.maxarticulos, area: this.area, suscripcion: this.suscripcion
             })

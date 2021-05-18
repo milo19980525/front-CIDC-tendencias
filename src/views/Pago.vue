@@ -34,7 +34,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(['suscripcion']),
+        ...mapState(['suscripcion', 'user']),
         verificar(){
             console.log("Entroooooooooooooooooooooooooooooooooo")
             console.log(this.suscripcion)
@@ -74,7 +74,11 @@ export default {
                 onApprove: async(data, actions) => {
                     // This function captures the funds from the transaction
                         await this.updateSuscripcion({suscripcion_enviar: "Premium"});
-                        await gmail.sendMail();
+                        console.log("PREVIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+                        console.log("PREVIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO 22222222222222")
+                        console.log("PREVIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO 33333333333333")
+                        console.log("fsakdjfñlasdkjflñsakdjflñaskj", this.user.email)
+                        await this.sendMail(this.user.email);
                         console.log('Enviando email...');
                         this.data;       
                 },
@@ -83,7 +87,7 @@ export default {
                 }
             }).render(this.$refs.paypal);
         },
-        ...mapActions(['updateSuscripcion']),
+        ...mapActions(['updateSuscripcion', 'sendMail']),
         async procesarFormulario(){
             
         },
