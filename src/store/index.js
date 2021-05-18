@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import router from '../router'
+//import sendMail from './gmail'
 
 export default createStore({
   state: {
@@ -266,63 +267,10 @@ export default createStore({
         console.log(error)
       }
     },
-    async sendMail({commit}, email){
-      console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO GMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-      const nodemailer = require('nodemailer')
-      const { google } = require('googleapis')
-      
-      console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO GMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-
-      const CLIENT_ID = '225068578618-9a435np32p9d4eidu3ohdbeog2gsqcjg.apps.googleusercontent.com'
-      const CLIENT_SECRET = 'ZspbZO_GAs0BUUMghr3P5nvc'
-      const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
-      const REFRESH_TOKEN = '1//04i_m13cOuUqgCgYIARAAGAQSNwF-L9Ir6G4tP0rVJgC7Cd_VLZtb5Mnuik3eb11BfCzUIp2cKEnnx9p4tiWuqGN_oFrv9-_UNKE'
-  
-      const oAuth2Client = new google.auth.OAuth2(
-            CLIENT_ID,
-            CLIENT_SECRET,
-            REDIRECT_URI
-        );
-  
-          oAuth2Client.setCredentials({refresh_token: REFRESH_TOKEN});
-          console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO GMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-      try{
-          console.log("GMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-          const accessToken = await oAuth2Client.getAccessToken();
-          console.log("GMAILLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-          console.log(email)
-          const transport = nodemailer.createTransport({
-              service: 'gmail',
-              auth:{
-                  type : 'OAuth2',
-                  user : 'juegabrayan333@gmail.com',
-                  clientId : CLIENT_ID,
-                  clientSecret : CLIENT_SECRET,
-                  refreshToken : REFRESH_TOKEN,
-                  accessToken : accessToken,
-              },
-          });
-  
-          const mailOptions = {
-              from : 'Notificador ProScience Searcher <juegabrayan333@gmail.com>',
-              to : email,
-              subject: "Notificación - Proscience Searcher",
-              text: 'Notificacion 1',
-              html: '<h1> Usted se ha suscrito a ProScien Searcher </h1>',
-          };
-
-          const result = await transport.sendMail(mailOptions);
-          console.log(result)
-
-          commit()
-  
-          
-          //return result;
-  
-      }catch(error){
-          console.log(error);
-      }
-    }, 
+    /* async sendMailT({commit}, email){
+      const send = require("./gmail")(sendMail);
+      send(email);
+    }, */
   },
   modules: {
   },

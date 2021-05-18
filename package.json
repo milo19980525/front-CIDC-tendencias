@@ -7,8 +7,10 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@types/nodemailer": "^6.4.1",
     "core-js": "^3.6.5",
     "dns": "^0.2.2",
+    "emailjs-com": "^2.6.4",
     "googleapis": "^73.0.0",
     "http2": "^3.3.7",
     "nodemailer": "^6.6.0",
