@@ -258,7 +258,7 @@ export default createStore({
     async obtenerRevistas({commit}, filtro){
       try {
         
-        const res = await fetch(`http://localhost:5000/filtroParametros?area=${filtro.area}&categoria1=${filtro.consulta1}&categoria2=${filtro.consulta2}&categoria3=${filtro.consulta3}&categoria4=${filtro.consulta4}&minArt=${filtro.minarticulos}&maxArt=${filtro.maxarticulos}&estado=${filtro.suscripcion}`)
+        const res = await fetch(`http://172.31.11.237:5000/filtroParametros?area=${filtro.area}&categoria1=${filtro.consulta1}&categoria2=${filtro.consulta2}&categoria3=${filtro.consulta3}&categoria4=${filtro.consulta4}&minArt=${filtro.minarticulos}&maxArt=${filtro.maxarticulos}&estado=${filtro.suscripcion}`)
         const revistas = await res.json()
         commit('setRevistasFiltradas', revistas)
         //localStorage.setItem('usuario', JSON.stringify(userDB))
