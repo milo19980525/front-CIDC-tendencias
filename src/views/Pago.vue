@@ -37,7 +37,6 @@ export default {
     computed:{
         ...mapState(['suscripcion', 'user']),
         verificar(){
-            console.log(this.suscripcion)
             if (this.suscripcion === 'Free'){
                 return true;
             }else{
@@ -47,8 +46,7 @@ export default {
     },
     mounted: function(){
         const script = document.createElement("script");
-        script.src = 
-        "https://www.paypal.com/sdk/js?client-id=AWxl68kad5UqI8vZkuLrtuyKZIF7TRdu-iBzWHIrk_lmgAW5BeKindYzeNa6kxFkL2em7OowKit1A3zk";
+        script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.VUE_APP_PAYPAL}`;
         script.addEventListener("load",this.setLoaded);
         document.body.appendChild(script);
     },
@@ -71,13 +69,15 @@ export default {
                 },
                 onApprove: async(data, actions) => {
                         await this.updateSuscripcion({suscripcion_enviar: "Premium"});
-                        emailjs.init('user_fcP5NcOfe2dyX3pz7CKKM')
-                        emailjs.send('service_uxnfisn','template_ks1pf2p', {email: this.user.email, name: this.name, message: "Mensaje"}
+                        emailjs.init(`${process.env.VUE_APP_EMAILJS_USER_ID}`);
+                        emailjs.send(`${process.env.VUE_APP_EMAILJS_SERVICE_ID}`,
+                                     `${process.env.VUE_APP_EMAILJS_TEMPLATE_ID}`,
+                                       {email: this.user.email, name: this.name, message: "Mensaje"}
                             ).then((response) => {
                                 console.log('Enviando email...');
                             }, (error) => {
                                 console.log('Error en el envio del email...');
-                            })
+                            });
                 },
                 onError: err => {
                     console.log(err);
