@@ -17,7 +17,8 @@ export default createStore({
     user : null,
     nombre: null,
     suscripcion: null,
-    error: {tipo: null, mensaje: null}
+    error: {tipo: null, mensaje: null},
+    error2: {tipo: null, mensaje: null}
   },
   mutations: {
     setError(state, payload){
@@ -31,23 +32,17 @@ export default createStore({
         return state.error = {tipo: 'contraseña', mensaje: 'Contraseña incorrecta'}
       }
       if(payload ==="EMAIL_EXISTS"){
-        return state.error = {tipo: 'email', mensaje: 'Email ya registrado'}
+        return state.error2 = {tipo: 'email', mensaje: 'Email ya registrado'}
       }
       if(payload ==="INVALID_EMAIL"){
-        return state.error = {tipo: 'email', mensaje: 'Email invalido'}
+        return state.error2 = {tipo: 'email', mensaje: 'Email invalido'}
       }
       if(payload ==="WEAK_PASSWORD : Password should be at least 6 characters"){
-        return state.error = {tipo: 'contraseña', mensaje: 'La contraseña debe ser mínimo de 6 carácteres de longitud'}
+        return state.error2 = {tipo: 'contraseña', mensaje: 'La contraseña debe ser mínimo de 6 carácteres de longitud'}
       }
     },
     setUser(state, payload){
-      console.log("USUARIOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-      console.log(payload)
       state.user = payload
-      console.log("USUARIOOOOOOOOOOOOOOOOOOOOOOOOOOOOO222222222222222222222")
-      console.log(state.user)
-      console.log("email")
-      //console.log(state.user.email)
     },
     cargar(state, payload){
       state.tareas = payload
@@ -65,11 +60,7 @@ export default createStore({
       state.nombre = payload
     },
     setSuscripcionUser(state, payload){
-      console.log("SUSCRIPCIONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
-      console.log(payload)
       state.suscripcion = payload
-      console.log("SUSCRIPCIONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN 2222222222222222222222222222222222222")
-      console.log(state.suscripcion)
     },
     eliminar(state, payload){
       state.tareas = state.tareas.filter(item => item.id !== payload)
@@ -86,11 +77,7 @@ export default createStore({
       router.push('/')
     },
     setRevistas(state, payload){
-      console.log("STATEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE REVISTAAAAAAAAAAAAAS JSOOOOOOOOOOOOOOOON")
-      console.log(payload)
       state.revistas = payload
-      console.log("STATEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE REVISTAAAAAAAAAAAAAS")
-      console.log(state.revistas)
     },
     setRevistasFiltradas(state, payload){
       state.revistasFiltradas = payload
@@ -109,7 +96,7 @@ export default createStore({
     },
     async ingresoUsuario({commit}, user){
       try {
-        const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDyJIk3EKTzIgWQXFuwbT3zQQYvL2_uYxk', {
+        const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_KEY_FIREBASE}`, {
           method: 'POST',
           body:JSON.stringify({
           email : user.email,
@@ -119,7 +106,6 @@ export default createStore({
         })
         const userDB = await res.json()
         if(userDB.error){
-          console.log(userDB.error)
           return commit('setError', userDB.error.message)
         }
         commit('setError', null)
@@ -132,7 +118,7 @@ export default createStore({
     },
     async registrarUsuario({commit}, user){
       try {
-        const res = await fetch ('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDyJIk3EKTzIgWQXFuwbT3zQQYvL2_uYxk', {
+        const res = await fetch (`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.VUE_APP_KEY_FIREBASE}`, {
           method: 'POST',
           body: JSON.stringify({
             email: user.email,
@@ -160,24 +146,23 @@ export default createStore({
         return commit('setUser', null)
       }
       try {
-        const res = await fetch(`https://udemy-firebase-56415-default-rtdb.firebaseio.com/tareas/${state.user.localId}/Nombre.json?auth=${state.user.idToken}`)
+        const res = await fetch(`${process.env.VUE_APP_URL}/${state.user.localId}/Nombre.json?auth=${state.user.idToken}`)
         const dataDB = await res.json()
         commit('cargarNombre', dataDB)
       } catch (error) {
         console.log(error)  
       }
       try {
-        const res = await fetch(`https://udemy-firebase-56415-default-rtdb.firebaseio.com/tareas/${state.user.localId}/Suscripcion.json?auth=${state.user.idToken}`)
+        const res = await fetch(`${process.env.VUE_APP_URL}/${state.user.localId}/Suscripcion.json?auth=${state.user.idToken}`)
         const dataDB = await res.json()
         commit('cargarSuscripcion', dataDB)
       } catch (error) {
         console.log(error)  
       }
-      console.log(state.user)
     },
     async setNombre({commit, state}, nombreUsuario){
       try {
-        const res = await fetch(`https://udemy-firebase-56415-default-rtdb.firebaseio.com/tareas/${state.user.localId}/Nombre.json?auth=${state.user.idToken}`, {
+        const res = await fetch(`${process.env.VUE_APP_URL}/${state.user.localId}/Nombre.json?auth=${state.user.idToken}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -192,7 +177,7 @@ export default createStore({
     },
     async setSuscripcion({commit, state}){
       try{
-        const res = await fetch(`https://udemy-firebase-56415-default-rtdb.firebaseio.com/tareas/${state.user.localId}/Suscripcion.json?auth=${state.user.idToken}`, {
+        const res = await fetch(`${process.env.VUE_APP_URL}/${state.user.localId}/Suscripcion.json?auth=${state.user.idToken}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -202,7 +187,6 @@ export default createStore({
       } catch (error) {
         console.log(error)
       }
-      console.log("INICIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
       commit('setSuscripcionUser', "Free")
     },
 
@@ -210,18 +194,16 @@ export default createStore({
     async updateSuscripcion({commit, state},susc){
       const valor = "Premium"
       try{
-        const res = await fetch(`https://udemy-firebase-56415-default-rtdb.firebaseio.com/tareas/${state.user.localId}.json?auth=${state.user.idToken}`, {
+        const res = await fetch(`${process.env.VUE_APP_URL}/${state.user.localId}.json?auth=${state.user.idToken}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({Suscripcion: susc.suscripcion_enviar})
         })
-        console.log("Llleooooooooooooooooooooooooooooooooooooooooo 1 11111111111111111111111111")
       } catch (error) {
         console.log(error)
       }
-      console.log("INICIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
       commit('setSuscripcionUser', "Premium")
     },
 
@@ -230,16 +212,12 @@ export default createStore({
       try {
         const res = await fetch('revistas.json')
         const data = await res.json()
-        console.log("JSOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNNNNNNNN REVISTAAAAAAAAAAAAAS")
-        console.log(data)
         commit('setRevistas', data)
       } catch (error) {
         console.log(error)
       }
     },
     filtrarQuartil({commit, state}, quartil){
-      console.log("FILTROOOOOOOOOOOOOOOOOOOOOOOOO STATEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
-      console.log(state.revistas)
       const filtro = state.revistas.filter(revista =>
         revista.quartil.includes(quartil)
       )
@@ -258,7 +236,7 @@ export default createStore({
     async obtenerRevistas({commit}, filtro){
       try {
         
-        const res = await fetch(`http://172.31.11.237:5000/filtroParametros?area=${filtro.area}&categoria1=${filtro.consulta1}&categoria2=${filtro.consulta2}&categoria3=${filtro.consulta3}&categoria4=${filtro.consulta4}&minArt=${filtro.minarticulos}&maxArt=${filtro.maxarticulos}&estado=${filtro.suscripcion}`)
+        const res = await fetch(`${process.env.VUE_APP_URL_API}/filtroParametros?area=${filtro.area}&categoria1=${filtro.consulta1}&categoria2=${filtro.consulta2}&categoria3=${filtro.consulta3}&categoria4=${filtro.consulta4}&minArt=${filtro.minarticulos}&maxArt=${filtro.maxarticulos}&estado=${filtro.suscripcion}`)
         const revistas = await res.json()
         commit('setRevistasFiltradas', revistas)
         //localStorage.setItem('usuario', JSON.stringify(userDB))
@@ -277,14 +255,13 @@ export default createStore({
   getters:{
     usuarioAutenticado(state){
       try {
-        console.log("usuariooooo",state.user)
+        console.log("")
       } catch (error) {
         console.log(error)
       } 
       return !!state.user
     },
     topRevistasArticulos(state){
-      console.log('ORDENAAAAR', state.revistasFiltradas)
       return state.revistasFiltradas.sort((a, b) => {
         return a.population < b.population ? 1 : -1
       })

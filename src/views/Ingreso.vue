@@ -1,6 +1,6 @@
 <template>
   <h1 class="my-5">
-      Bienvenido a Proscience Searcher
+      Bienvenido a Proscience Finder
   </h1>
   <h2 class="my-5">
       Ingreso de Usuarios
@@ -44,7 +44,6 @@ export default {
     },
     computed:{
         bloquear(){
-            console.log(this.pass1)
             if(!this.email.includes('@')){
                 return true
             }

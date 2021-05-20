@@ -146,17 +146,14 @@ export default {
         mostrarError(){
             if(this.maxarticulos <= this.minarticulos){
                 this.error_componente = "La cantidad de artículos máxima debe ser mayor que la definida en el mínimo."
-                console.log(this.error_componente)
                 return true
             }
             if(this.area === ''){
                 this.error_componente = "Seleccione un área de conocimiento."
-                console.log(this.error_componente)
                 return true
             }
             if(!this.consulta1 && !this.consulta2 && !this.consulta3 && !this.consulta4){
                 this.error_componente = "Seleccione por lo menos un cuartil."
-                console.log(this.error_componente)
                 return true
             }
         },
@@ -165,11 +162,6 @@ export default {
     methods:{
         ...mapActions(['obtenerRevistas']),
         async procesarFormulario(){
-            console.log("CONSULTAAAAAAAAAAAS")
-            console.log(this.consulta1)
-            console.log(this.consulta2)
-            console.log(this.consulta3)
-            console.log(this.consulta4)
             this.obtenerRevistas({consulta1: this.consulta1, consulta2: this.consulta2, consulta3: this.consulta3, 
             consulta4: this.consulta4, minarticulos: this.minarticulos, maxarticulos: this.maxarticulos, area: this.area, suscripcion: this.suscripcion
             })

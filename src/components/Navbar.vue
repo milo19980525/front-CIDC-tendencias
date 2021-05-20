@@ -6,7 +6,7 @@
       <div
       v-if="usuarioAutenticado">
         <h5 class="my-3 mx-auto" style="color:white">
-            Bienvenido a Proscience Searcher: {{nombre}}
+            Bienvenido a Proscience Finder: {{nombre}}
         </h5>
       </div>
       <div class="d-flex">

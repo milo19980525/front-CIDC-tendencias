@@ -1,6 +1,6 @@
 <template>
   <h1 class="my-5">
-      Bienvenido a Proscience Searcher
+      Bienvenido a Proscience Finder
   </h1>
   <h2 class="my-5">
       Registro de Usuarios
@@ -23,8 +23,8 @@
   <div class="alert alert-danger" v-if="mostrarError === true">
       {{error_componente}}
   </div>
-  <div class="alert alert-danger" v-if="error.tipo !== null">
-      {{error.mensaje}}
+  <div class="alert alert-danger" v-if="error2.tipo !== null">
+      {{error2.mensaje}}
   </div>
   <form @submit.prevent="procesarFormulario">
     <input
@@ -32,21 +32,21 @@
         placeholder="email"
         class="form-control my-2"
         v-model.trim="email"
-        :class="[error.tipo === 'email' ? 'is-invalid' : '']"
+        :class="[error2.tipo === 'email' ? 'is-invalid' : '']"
     >
     <input 
         type="password"
         placeholder="password"
         class="form-control my-2"
         v-model.trim="pass1"
-        :class="[error.tipo === 'contraseña' ? 'is-invalid' : '']"
+        :class="[error2.tipo === 'contraseña' ? 'is-invalid' : '']"
     >
     <input
         type="password" 
         placeholder="password"
         class="form-control my-2"
         v-model.trim="pass2"
-        :class="[error.tipo === 'contraseña' ? 'is-invalid' : '']"
+        :class="[error2.tipo === 'contraseña' ? 'is-invalid' : '']"
     >
     <input
         type="text" 
@@ -77,8 +77,6 @@ export default {
     },
     computed:{
         bloquear(){
-            console.log(this.pass2)
-            console.log(this.pass1)
             if(!this.email.includes('@')){
                 return true
             }
@@ -88,31 +86,26 @@ export default {
             return true
         },
         mostrarError(){
-            console.log(this.error_componente)
-            console.log(this.nombre)
             if((this.allLetter(this.nombre) === false) && this.nombre.length > 0){
                 this.error_componente = "No pueden existir caracteres o números en el campo nombre."
-                console.log(this.error_componente)
                 return true
             }
             if(this.pass1.length < 6 && this.pass1 !== this.pass2){
                 this.error_componente = "La contraseña debe ser mayor mínimo de 6 caractéres."
-                console.log(this.error_componente)
                 return true
             }
             if(this.pass1 !== this.pass2){
                 this.error_componente = "Las contraseñas no coinciden."
-                console.log(this.error_componente)
                 return true
             }
         },
-        ...mapState(['error'])
+        ...mapState(['error2'])
     },
     methods:{
         ...mapActions(['registrarUsuario', 'setNombre', 'setSuscripcion']),
         async procesarFormulario(){
             await this.registrarUsuario({email: this.email, password: this.pass1, nombre: this.nombre})
-            if(this.error.tipo !== null){
+            if(this.error2.tipo !== null){
                 return
             }
             this.email = ''
@@ -125,12 +118,10 @@ export default {
         var letters = /^[A-Za-z ñáéíóú]+$/
         if(inputtxt.match(letters))
             {
-            console.log("correcto")
             return true;
             }
         else
             {
-            console.log("incorrecto")
             return false;
             }
         }

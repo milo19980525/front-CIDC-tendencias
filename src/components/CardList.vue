@@ -1,4 +1,11 @@
 <template>
+  <h3
+      v-if="revistas"
+      class="my-5"
+      style="text-align: center"
+      >
+        Lista de Revistas
+    </h3>
   <div class="row"
     v-if="revistas">
     <div 
