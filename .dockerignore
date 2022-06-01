@@ -1,0 +1,12 @@
+#excluding the node_modules directory and the .git directory
+*.bk.*
+*.cmd
+*.code-workspace
+*.ps1
+.DS_Store
+.git/
+_bk/
+_notes.txt
+diagram/
+dist/
+node_modules/

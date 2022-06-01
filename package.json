@@ -13,7 +13,7 @@
     "emailjs-com": "^2.6.4",
     "googleapis": "^73.0.0",
     "http2": "^3.3.7",
-    "nodemailer": "^6.6.0",
+    "nodemailer": "^6.7.5",
     "shortid": "^2.2.16",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
