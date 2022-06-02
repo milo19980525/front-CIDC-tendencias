@@ -17,7 +17,7 @@ RUN npm run build
 # Etapa de producción Apache
 FROM httpd:2.4-alpine as apache
 COPY --from=node /app/dist /usr/local/apache2/htdocs
-EXPOSE 80
+EXPOSE 8080
 
 # Now let's build the Docker image of our Vue.js app:
 # docker build -t cidc.udistrital.edu.co/siciud:v2.0 .
