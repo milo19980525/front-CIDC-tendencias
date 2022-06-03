@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'front-tendencias'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FB809610614F482F819DE9CD6969135F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B1FE5C40B0BA4498A4B7632E1FA8D131 }}
           package: .
